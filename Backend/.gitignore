@@ -1,0 +1,49 @@
+### General
+.DS_Store
+Thumbs.db
+desktop.ini
+
+### Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+
+
+
+### Environment
+.env
+.env.local
+.env.*.local
+
+### Build / Dist
+dist/
+build/
+out/
+coverage/
+
+### Logs
+*.log
+logs/
+
+### IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+### OS generated
+ehthumbs.db
+Icon?
+
+### Misc
+.cache/
+.parcel-cache/
+*.tgz
+*.zip
+
+# End of file
