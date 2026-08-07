@@ -7,8 +7,12 @@ app.use(express.urlencoded())
 
 
 // app routes
-import authRoutes from './routes/auth.routes'
-app.use('api/auth/',authRoutes)
+import authRoutes from './routes/auth.routes.js'
+app.use('/api/auth/',authRoutes)
 
+
+app.use('/api/health',(req,res)=>{
+    res.send('Health check passed')
+})
 export default app;
 
