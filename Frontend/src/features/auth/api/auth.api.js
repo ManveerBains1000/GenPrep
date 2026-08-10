@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BACKEND_URI="http://localhost:4000/api/"
+const BACKEND_URI=import.meta.env.VITE_BACKEND_URI
 
 const api = axios.create({
     baseURL: `${BACKEND_URI}/auth`,
@@ -51,10 +51,11 @@ export async function logout() {
 
 export async function getMe() {
     try {
-        const response = await axios.get("/get-me")
+        const response = await api.get("/get-me")
         return response.data
     } catch (error) {
         console.log(error);
     }
 }
+
 

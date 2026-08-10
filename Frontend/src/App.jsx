@@ -3,9 +3,8 @@ import { router } from "./app.routes.jsx"
 import { AuthProvider } from "./features/auth/auth.context.jsx"
 
 function App() {
-
   return (
-    <AuthProvider>
+   <AuthProvider>
       <RouterProvider router={router}/>
     </AuthProvider>
   )
