@@ -1,11 +1,9 @@
 import {GoogleGenAI} from "@google/genai"
 import { z } from 'zod';
 import {zodToJsonSchema} from 'zod-to-json-schema'
-import { env } from "../config/env.js";
-
-console.log(env.GEMINI_API_KEY)
+import {env} from "../config/env.js"
 const ai = new GoogleGenAI({
-     apiKey: process.env.GEMINI_API_KEY  
+     apiKey: env.GEMINI_API_KEY
 });
 
 export async function invokeGeminiAi(){
@@ -18,6 +16,7 @@ export async function invokeGeminiAi(){
 }
 
 const interviewReportSchema = z.object({
+    matchScore: z.number().describe("A score between 0 and 100 indicating how well the candidate's profile matches the job describe"),
     technicalQuestions: z.array(z.object({
         question: z.string().describe("The technical question may be asked in the interview"),
         intention: z.string().describe("The intention of the interviewer behind the technical question"),
@@ -36,25 +35,44 @@ const interviewReportSchema = z.object({
         day: z.number().describe("The day number of the preparation plan"),
         focus: z.string().describe("The focus of the preparation plan for the day"),
         tasks: z.array(z.string().describe("The tasks that the candidate should do to prepare for the interview on the day"))
-    })).describe("A day-wise preparation plan for the candidate to prepare for the interview  ")
+    })).describe("A day-wise preparation plan for the candidate to prepare for the interview  "),
+    title: z.string().describe("The title of the job for which the interview report is generated"),
 });
 
 
 export async function generateInterviewReport({resume ,selfDescription, jobDescription }){
 
-    const prompt = `You are an expert interview coach. You have to generate an interview report for a candidate based on the resume, self description and job description provided.
-    Resume: ${resume} Self Description: ${selfDescription} job Description: ${jobDescription}
-    `
+const prompt = `
+You are an expert interview coach.
+
+Generate an interview preparation report for the candidate based on:
+1. Resume
+2. Self description
+3. Job description
+
+The output MUST strictly follow the provided response schema.
+
+Do not add any properties that are not present in the schema.
+Do not rename any properties.
+matchScore must be a number between 0 and 100, not a percentage string.
+
+Resume:
+${resume}
+
+Self Description:
+${selfDescription}
+
+Job Description:
+${jobDescription}
+`;
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3.6-flash",
         contents: prompt,
         config:{
             responseMimeType: "application/json",
-            responsejsonSchema: zodToJsonSchema(interviewReportSchema)
+            responseJsonSchema: z.toJSONSchema(interviewReportSchema)
         }
     })
-
-    console.log(JSON.parse(response.text))
-
+    return JSON.parse(response.text)
 }
 

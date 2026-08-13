@@ -12,11 +12,15 @@ app.use(cors({
 }))
 // app routes
 import authRoutes from './routes/auth.routes.js'
+import interviewRoutes from "./routes/interview.routes.js"
 app.use('/api/auth/',authRoutes)
+app.use('/api/interview/',interviewRoutes)
 
 
 app.use('/api/health',(req,res)=>{
     res.send('Health check passed')
 })
+
+
 export default app;
 
