@@ -1,4 +1,4 @@
-import { generateInterviewReport } from "../services/ai.service.js";
+import { generateInterviewReport,generateResumePdf } from "../services/ai.service.js";
 import { InterviewReport } from "../models/interviewReport.model.js";
 import { PDFParse } from "pdf-parse";
 
@@ -103,3 +103,41 @@ export const getAllInterviewReportsController = async (req, res) => {
     });
   }
 };
+
+
+/**
+ * @description controller to generate resume pdf from interview report
+ * @access private
+ */
+export const generateResumePdfController = async (req, res) => {
+  try {
+    const { interviewId } = req.params;
+
+    const interviewReport = await InterviewReport.findById(interviewId);
+
+    if (!interviewReport) {
+      return res.status(404).json({
+        message: "Interview report not found",
+      });
+    }
+
+    const {resume,selfDescription,jobDescription} = interviewReport;
+
+    const pdfBuffer = await generateResumePdf({resume,selfDescription,jobDescription});
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=interview_report_${interviewId}.pdf`,
+    );
+    res.send(pdfBuffer); 
+
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Unable to generate resume PDF",
+    });
+  }
+}
+ 

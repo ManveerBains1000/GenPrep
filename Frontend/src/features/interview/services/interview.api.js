@@ -37,7 +37,7 @@ export async function generateInterviewReport({jobDescription, selfDescription, 
 
 export async function getInterviewReportById(interviewId) {
 
-    const response = await api.get(`/report/${interviewId}`);
+    const response = await interviewApi.get(`/report/${interviewId}`);
 
     return response.data;
 }
@@ -47,7 +47,28 @@ export async function getInterviewReportById(interviewId) {
  * @description get all interview report of loggedin user
  */
 export async function getAllInterviewReports() {
-    const response = await api.get("/");
+    const response = await interviewApi.get("/");
 
     return response.data;
+}
+
+
+/**
+ * @Description generate resume pdf from interview report
+ * @Access private
+ */
+
+export async function generateResumePdf(interviewId) {
+    try{
+        const response = await interviewApi.post(
+            `/resume/pdf/${interviewId}`,
+            null,
+            { responseType: 'blob' }
+        );
+        return response.data; // Blob PDF
+    }
+    catch(error){
+        console.error("Error generating resume pdf:", error);
+        throw error;
+    }
 }

@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import verifyJWT from '../middlewares/verifyJWT.js';
-import { generateInterviewReportController,getInterviewReportByIdController,getAllInterviewReportsController } from '../controllers/interview.controller.js';
+import { generateInterviewReportController,getInterviewReportByIdController,getAllInterviewReportsController,generateResumePdfController } from '../controllers/interview.controller.js';
 import upload from '../middlewares/file.middleware.js';
 const interviewRoutes = Router()
 
@@ -28,5 +28,12 @@ interviewRoutes.route("/report/:interviewId").get(verifyJWT,getInterviewReportBy
  */
 
 interviewRoutes.route("/").get(verifyJWT,getAllInterviewReportsController);
+
+/**
+ * @Route get /api/interview/resume/pdf/:interviewId
+ * @Description controller to generate resume pdf from interview report
+ * @Access private
+ */
+interviewRoutes.route("/resume/pdf/:interviewId").post(verifyJWT,generateResumePdfController)
 
 export default interviewRoutes;

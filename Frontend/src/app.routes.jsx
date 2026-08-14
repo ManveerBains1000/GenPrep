@@ -5,22 +5,30 @@ import Home from "./features/interview/pages/Home.jsx";
 import Protected from "./features/auth/components/Protected.jsx";
 import Interview from "./features/interview/pages/interview.jsx";
 
-export const router = createBrowserRouter([,
-    {
-        path: "/login",
-        element: <Login />
-    },
-    {
-        path: "/register",
-        element: <Register />
-    },
-    {
-        path: "/",
-        element: <Protected><Home/></Protected>
-    },
-    {
-        path: "interview/:interviewId",
-        element: <Protected><Interview/></Protected>
-    }
+export const router = createBrowserRouter([
+  ,
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/",
+    element: (
+      <Protected>
+        <Home />
+      </Protected>
+    ),
+  },
+  {
+    path: "/interview/:interviewId",
+    element: (
+      <Protected>
+        <Interview />
+      </Protected>
+    ),
+  },
 ]);
-
