@@ -7,14 +7,6 @@ const ai = new GoogleGenAI({
   apiKey: env.GEMINI_API_KEY,
 });
 
-export async function invokeGeminiAi() {
-  const response = await ai.interactions.create({
-    model: "gemini-3.6-flash",
-    input: "Hello gemini ! Explain what is interview ?",
-  });
-
-  console.log("Response content: ", response.output_text);
-}
 
 const interviewReportSchema = z.object({
   matchScore: z

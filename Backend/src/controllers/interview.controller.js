@@ -107,7 +107,7 @@ export const getAllInterviewReportsController = async (req, res) => {
 
 /**
  * @description controller to generate resume pdf from interview report
- * @access private
+ * @Access private
  */
 export const generateResumePdfController = async (req, res) => {
   try {

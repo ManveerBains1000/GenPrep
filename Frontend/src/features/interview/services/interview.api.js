@@ -55,7 +55,6 @@ export async function getAllInterviewReports() {
 
 /**
  * @Description generate resume pdf from interview report
- * @Access private
  */
 
 export async function generateResumePdf(interviewId) {
