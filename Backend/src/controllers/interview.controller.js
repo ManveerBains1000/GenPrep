@@ -88,7 +88,7 @@ export const getAllInterviewReportsController = async (req, res) => {
   try {
     const interviewReports = await InterviewReport.find({ user: req.user.id })
       .select(
-        "-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan",
+        "-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions  -preparationPlan",
       )
       .sort({ createdAt: -1 });
 

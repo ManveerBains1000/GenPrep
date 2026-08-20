@@ -4,6 +4,7 @@ import Register from "./features/auth/pages/Register";
 import Home from "./features/interview/pages/Home.jsx";
 import Protected from "./features/auth/components/Protected.jsx";
 import Interview from "./features/interview/pages/interview.jsx";
+import InterviewReports from "./features/interview/pages/InterviewReports.jsx";
 
 export const router = createBrowserRouter([
   ,
@@ -31,4 +32,12 @@ export const router = createBrowserRouter([
       </Protected>
     ),
   },
+  {
+    path: "/interview-reports",
+    element:(
+      <Protected>
+        <InterviewReports/>
+      </Protected>
+    )
+  }
 ]);

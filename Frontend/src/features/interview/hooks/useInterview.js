@@ -111,6 +111,7 @@ export const useInterview = () => {
       }
       else {
         await fetchAllReports();
+        
       }
     };
     fetchAndSetReport(interviewId);

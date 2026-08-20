@@ -26,6 +26,7 @@ const Home = () => {
     )
   }
 
+  console.log("Fetch reports: ",interviewReports);
   return (
     <div className="home-page">
       {/* Page Header */}
