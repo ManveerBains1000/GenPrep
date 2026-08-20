@@ -4,7 +4,7 @@ import "../style/home.scss";
 import { useInterview } from "../hooks/useInterview.js";
 
 const Home = () => {
-  const { loading, generateReport, interviewReport,interviewReports } = useInterview();
+  const { loading, generateReport, interviewReport } = useInterview();
   const [jobDescription, setJobDescription] = useState("");
   const [selfDescription, setSelfDescription] = useState("");
   const resumeInputRef = useRef();
@@ -26,11 +26,10 @@ const Home = () => {
     )
   }
 
-  console.log("Fetch reports: ",interviewReports);
   return (
     <div className="home-page">
       {/* Page Header */}
-      <header className="page-header">
+      <div className="page-header">
         <h1>
           Create Your Custom <span className="highlight">Interview Plan</span>
         </h1>
@@ -38,7 +37,7 @@ const Home = () => {
           Let our AI analyze the job requirements and your unique profile to
           build a winning strategy.
         </p>
-      </header>
+      </div>
 
       {/* Main Card */}
       <div className="interview-card">
@@ -219,25 +218,6 @@ const Home = () => {
         </div>
       </div>
 
-
-      {/*Recent Reports Section*/}
-      {
-        interviewReports && interviewReports.length > 0 && (
-          <section className="recent-reports">
-            <h2>My Recent Interview Plans</h2>
-            <ul className="reports-list">
-              {interviewReports.map(report=>(
-                <li key={report._id} className="report-item"
-                onClick={() => navigate(`/interview/${report._id}`)}>
-                  <h3>{report.title || "untitled Position"}</h3>
-                  <p className="report-meta">Generated on {new Date(report.createdAt).toLocaleDateString()}</p>
-                  <p className={`match-score ${report.matchScore >= 80 ? "score-high" : report.matchScore >= 60 ? 'score--mid' : 'score--low'}`}>Match Score: {report.matchScore}%</p>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )
-      }
     </div>
   );
 };

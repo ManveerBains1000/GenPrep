@@ -1,10 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../auth.context";
 import { login, register, logout, getMe } from "../api/auth.api.js";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
   const { user, setUser, loading, setLoading } = context;
+  const didFetch = useRef(false);
 
   const handleLogin = async ({ email, password }) => {
     setLoading(true);
@@ -39,6 +40,8 @@ export const useAuth = () => {
   };
 
   useEffect(() => {
+    if (didFetch.current) return;
+    didFetch.current = true;
     const getAndSetUser = async () => {
       try {
         setLoading(true)

@@ -5,9 +5,11 @@ import Home from "./features/interview/pages/Home.jsx";
 import Protected from "./features/auth/components/Protected.jsx";
 import Interview from "./features/interview/pages/interview.jsx";
 import InterviewReports from "./features/interview/pages/InterviewReports.jsx";
+import Cover from "./Cover.jsx";
+import Logout from "./features/auth/pages/Logout.jsx";
+import GenerateResume from "./features/interview/pages/GenerateResume.jsx";
 
 export const router = createBrowserRouter([
-  ,
   {
     path: "/login",
     element: <Login />,
@@ -17,27 +19,33 @@ export const router = createBrowserRouter([
     element: <Register />,
   },
   {
+    path: "/logout",
+    element: <Logout/>
+  },
+  {
     path: "/",
     element: (
       <Protected>
-        <Home />
+        <Cover />
       </Protected>
     ),
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/interview/:interviewId",
+        element: <Interview />,
+      },
+      {
+        path: "/interview-reports",
+        element: <InterviewReports />,
+      },
+      {
+        path: "/generate-resume",
+        element: <GenerateResume/>
+      }
+    ],
   },
-  {
-    path: "/interview/:interviewId",
-    element: (
-      <Protected>
-        <Interview />
-      </Protected>
-    ),
-  },
-  {
-    path: "/interview-reports",
-    element:(
-      <Protected>
-        <InterviewReports/>
-      </Protected>
-    )
-  }
 ]);
